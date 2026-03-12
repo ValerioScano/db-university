@@ -50,7 +50,7 @@ SELECT COUNT(*) FROM departments
 ***8***
 
 SELECT COUNT(*) FROM teachers
-WHERE phone IS NOT NULL
+WHERE phone IS NULL
 
 ///////////////////////
 

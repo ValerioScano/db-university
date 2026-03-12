@@ -1,0 +1,76 @@
+***1***
+
+SELECT students.name, students.surname, students.fiscal_code, 
+degrees.name, degrees.level
+FROM students
+INNER JOIN degrees
+ON students.degree_id = degrees.id
+WHERE degrees.name = "Corso di Laurea in Economia"
+
+***2***
+
+SELECT courses.*, departments.name, degrees.level
+FROM courses
+INNER JOIN degrees
+ON courses.degree_id = degrees.id
+INNER JOIN departments
+ON degrees.department_id = departments.id
+WHERE degrees.level = "magistrale"
+AND departments.name LIKE "%Neuroscienze"
+
+***3***
+
+SELECT teachers.id AS "id teacher", teachers.surname, teachers.name, 
+courses.id AS "id corso", courses.name
+FROM teachers
+INNER JOIN course_teacher
+ON teachers.id = course_teacher.teacher_id
+INNER JOIN courses
+ON course_teacher.course_id = courses.id
+WHERE teachers.id = 44
+
+***4***
+
+SELECT students.surname, students.name, students.fiscal_code,
+degrees.name, departments.name
+FROM students
+INNER JOIN degrees
+ON students.degree_id = degrees.id
+INNER JOIN departments
+ON degrees.department_id = departments.id
+ORDER BY students.surname, students.name ASC
+
+***5***
+
+SELECT degrees.name AS "nome CdL", courses.name AS "nome corso", teachers.name AS "nome insegnante", teachers.surname AS "cognome insegnante"
+FROM degrees
+INNER JOIN courses
+ON courses.degree_id = degrees.id
+INNER JOIN course_teacher
+ON course_teacher.course_id = courses.id
+INNER JOIN teachers
+ON course_teacher.teacher_id = teachers.id
+
+***6***
+
+SELECT teachers.*, departments.name
+FROM teachers
+INNER JOIN course_teacher
+ON course_teacher.teacher_id = teachers.id
+INNER JOIN courses
+ON course_teacher.course_id = courses.id
+INNER JOIN degrees
+ON courses.degree_id= degrees.id
+INNER JOIN departments
+ON degrees.department_id = departments.id
+WHERE departments.name LIKE "%Matematica"
+
+***7***
+
+SELECT students.name, students.surname, COUNT(exam_student.exam_id) AS "n.tentativi", MAX(exam_student.vote) AS "voto massimo"
+FROM students
+INNER JOIN exam_student
+ON students.id = student_id
+WHERE exam_student.vote >= 18
+GROUP BY students.name, students.surname
+
